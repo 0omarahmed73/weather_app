@@ -16,6 +16,10 @@
   --placeHolder: #b8b6b6;
 }
 
+* {
+  transition: 0.4s ease-in-out background-color !important;
+}
+
 body {
   background-color: var(--bgColor) !important;
   font-family: 'Inter', sans-serif !important;
