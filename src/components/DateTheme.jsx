@@ -1,23 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Col } from "react-bootstrap";
 import useLocalStorage from "use-local-storage";
+import { WeatherContext } from "../contexts/WeatherContext";
 
-export function DateTheme({col = 2}) {
+export function DateTheme({ col = 2 }) {
   const [theme, setTheme] = useLocalStorage("theme", "light");
-
+  const {weather} = useContext(WeatherContext);
   const handleThemeToggle = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
-  useEffect(() => {
-    document.body.setAttribute("data-theme", theme);
-  }, [theme]);
-
   return (
     <Col xs={col} className="date-theme">
       <div className="date-time">
-        <p>24/6/2024</p>
-        <p>12:00 PM</p>
+        <p>{weather ? weather.location.localtime.split(' ')[0] : ''}</p>
+        <p>{weather ? weather.location.localtime.split(' ')[1] : ''}</p>
       </div>
       <label className="switch">
         <input

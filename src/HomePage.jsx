@@ -1,23 +1,38 @@
-import { useGeolocation } from "@uidotdev/usehooks";
-import { useEffect, useState } from "react";
-import { Weather } from "./services/find_weather";
 import { NavBar } from "./components/NavBar";
+import { motion } from "framer-motion";
+import { WeatherContext } from "./contexts/WeatherContext";
+import { useContext, useEffect } from "react";
+import Loading from "./components/Loading/Loading";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 function HomePage() {
-  const state = useGeolocation();
-  const [weather, setWeather] = useState({});
+  const [theme, setTheme] = useLocalStorage("theme", "light");
+
   useEffect(() => {
-    if (state.latitude && state.longitude) {
-      Weather.findWeather({ state }).then((response) => {
-        setWeather(response);
-      });
-    }
-  }, [state]);
-  console.log(weather);
-  return (
-    <div className="parent">
-      <NavBar />
+    document.body.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  const { loading } = useContext(WeatherContext);
+  return loading ? (
+    <div className="loading">
+      <Loading />
     </div>
+  ) : (
+    <motion.div
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{
+        type: "spring",
+        bounce: 1,
+        delay: 0.2,
+        velocity: 0.5,
+        stiffness: 260,
+        damping: 30,
+      }}
+      className="parent"
+    >
+      <NavBar />
+    </motion.div>
   );
 }
 
