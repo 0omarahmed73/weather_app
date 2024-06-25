@@ -205,3 +205,36 @@ p {
     clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0)
   }
 }
+
+/* Modal */
+#modal-root {
+  position: fixed;
+  /* Cover the entire viewport */
+  top: 68px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1050;
+  /* Higher than other content */
+
+  & .modal_overlay {
+    position: fixed;
+    top: 68px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Slight transparency */
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media screen and (max-width: 992px) {
+    top: 112px;
+    & .modal_overlay {
+      top: 112px;
+    }
+  }
+}

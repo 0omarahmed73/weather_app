@@ -4,6 +4,7 @@ import { Weather } from "../services/find_weather";
 export const WeatherContext = createContext();
 
 export const WeatherProvider = ({ children }) => {
+  const [isSearching, setIsSearching] = useState(false);
   const state = useGeolocation();
   const [weather, setWeather] = useState({
     location: {
@@ -50,7 +51,9 @@ export const WeatherProvider = ({ children }) => {
   }, [state]);
   console.log(weather);
   return (
-    <WeatherContext.Provider value={{ weather, loading }}>
+    <WeatherContext.Provider
+      value={{ weather, loading, isSearching, setIsSearching }}
+    >
       {children}
     </WeatherContext.Provider>
   );

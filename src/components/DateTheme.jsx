@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Col } from "react-bootstrap";
 import useLocalStorage from "use-local-storage";
 import { WeatherContext } from "../contexts/WeatherContext";
+import { formatTime } from "../services/format_time";
 
 export function DateTheme({ col = 2 }) {
   const [theme, setTheme] = useLocalStorage("theme", "light");
@@ -16,17 +17,6 @@ export function DateTheme({ col = 2 }) {
       setDate(new Date(weather.location.localtime_epoch * 1000));
     }
   }, [weather]);
-
-  const formatTime = (date) => {
-    if (!(date instanceof Date)) return "";
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? `0${minutes}` : minutes; // add leading zero if needed
-    return `${hours}:${minutes} ${ampm}`;
-  };
 
   return (
     <Col xs={col} className="date-theme">
